@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "yt-dlp"
+name = "yt-dlp-plus"
 authors = [
     {name = "pukkandan", email = "pukkandan.ytdlp@gmail.com"},
 ]
@@ -14,7 +14,7 @@ maintainers = [
     {name = "coletdjnz", email = "coletdjnz@protonmail.com"},
     {name = "sepro", email = "sepro@sepr0.com"},
 ]
-description = "A feature-rich command-line audio/video downloader"
+description = "Enhanced yt-dlp with async support, REST API, and batch processing"
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = [
@@ -24,6 +24,10 @@ keywords = [
     "youtube-downloader",
     "sponsorblock",
     "yt-dlp",
+    "async",
+    "rest-api",
+    "batch-processing",
+    "yt-dlp-plus",
 ]
 license = "Unlicense"
 license-files = ["LICENSE"]
@@ -57,6 +61,21 @@ default = [
     "urllib3>=2.0.2,<3",
     "websockets>=13.0",
     "yt-dlp-ejs==0.3.1",
+]
+api = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.0.0",
+]
+async = [
+    "aiohttp>=3.9.0",
+    "aiofiles>=23.2.0",
+]
+cli = [
+    "typer>=0.9.0",
+]
+all = [
+    "yt-dlp-plus[api,async,cli]",
 ]
 curl-cffi = [
     "curl-cffi>=0.5.10,!=0.6.*,!=0.7.*,!=0.8.*,!=0.9.*,<0.14; implementation_name=='cpython'",
@@ -97,6 +116,8 @@ Funding = "https://github.com/yt-dlp/yt-dlp/blob/master/Maintainers.md#maintaine
 
 [project.scripts]
 yt-dlp = "yt_dlp:main"
+yt-dlp-plus = "yt_dlp_plus.cli:main"
+yt-dlp-plus-api = "yt_dlp_plus.api.server:run_server"
 
 [project.entry-points.pyinstaller40]
 hook-dirs = "yt_dlp.__pyinstaller:get_hook_dirs"
